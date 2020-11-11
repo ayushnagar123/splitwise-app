@@ -13,7 +13,7 @@ export default class MyGroups extends Component {
         this.state.phoneNo = e.target.value
     }
     getGroup(){
-        axios.get('http://localhost:3000/users/mygroup',{phoneNo:this.state.phoneNo})
+        axios.get('http://localhost:5000/users/mygroup',{phoneNo:this.state.phoneNo})
             .then(resp=>{
                 this.state.mygroups = resp;
             })
