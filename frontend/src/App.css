@@ -1,0 +1,18 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly
+}
+
+li{
+  list-style-type: none;
+}
