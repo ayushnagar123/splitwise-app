@@ -1,28 +1,29 @@
 var express = require('express');
-const { route } = require('.');
 var router = express.Router();
-const {UserModel,GroupModel} = require('../model/users')
+const bson = require('bson');
+const {UserModel,GroupModel,ExpensesModel} = require('../model/users')
 
 router.get('/',(req,res)=>{
     res.send("expenses list")
 })
 
-router.post('/',(req,res)=>{
-    let {groupId,expense_title,list_of_people,amount,description,payer} = req.body;
-    GroupModel.aggregate([
-      {$match:{"_id":groupId}},
-      {$group:{
+router.patch('/:groupId',(req,res)=>{
+    let groupId = req.params.groupId;
+    let {expense_title,list_of_people,amount,description,payer} = req.body;
+    let newExpense = new ExpensesModel({expense_title,list_of_people,amount,description,payer});
+    GroupModel.updateOne(
+      {_id:groupId},
+      {
         $push:{
-          expenses:{
-            expense_title,list_of_people,payer,amount,description
-          }
+          expenses:newExpense
         }
-      }}
-    ])
+      }
+    )
     .then(resp=>{
       res.send(resp)
     })
     .catch(err=>{throw err;})
 })
+
 
 module.exports = router;

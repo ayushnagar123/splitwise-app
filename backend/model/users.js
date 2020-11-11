@@ -10,7 +10,7 @@ const UsersSchema = new Schema({
 const GroupSchema = new Schema({
   list_of_people: [],
   title:String,
-  expences:[{
+  expenses:[{
     list_of_people:[],
     expense_title:String,
     amount:Number,
@@ -19,7 +19,16 @@ const GroupSchema = new Schema({
   }]
 });
 
+const ExpensesSchema = new Schema({
+    list_of_people:[],
+    expense_title:String,
+    amount:Number,
+    decription:String,
+    payer:String
+})
+
 const UserModel = mongoose.model('users', UsersSchema);
 const GroupModel = mongoose.model('groups', GroupSchema);
+const ExpensesModel = mongoose.model('expenses', ExpensesSchema);
 
-module.exports = {UserModel,GroupModel};
+module.exports = {UserModel,GroupModel,ExpensesModel};
