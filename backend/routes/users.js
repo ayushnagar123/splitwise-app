@@ -24,7 +24,9 @@ router.post('/',(req,res)=>{
 })
 
 router.get('/mygroups',(req,res)=>{
-  let {phoneNo} = req.body;
+  
+  console.log(req.query)
+  let {phoneNo} = req.query;
   console.log(phoneNo)
   GroupModel.find(
     {list_of_people:{$in:[phoneNo]}}
