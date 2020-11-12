@@ -32,6 +32,7 @@ router.get('/mygroups',(req,res)=>{
     {list_of_people:{$in:[phoneNo]}}
   )
   .then(resp=>{
+    console.log(resp)
     res.send(resp)
   })
   .catch(err=>{throw err;})

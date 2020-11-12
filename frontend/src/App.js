@@ -7,6 +7,9 @@ import {
 } from "react-router-dom";
 import './App.css';
 import MyGroups from './Components/MyGroups'
+import CreateGroup from './Components/CreateGroup'
+import GroupExpenses from './Components/GroupExpenses'
+
 function App() {
   return (
     <div className="App">
@@ -18,7 +21,7 @@ function App() {
               <Link to="/">My groups</Link>
             </li>
             <li>
-              <Link to="/about">Create Group</Link>
+              <Link to="/creategroup">Create Group</Link>
             </li>
             <li>
               <Link to="/users">Create User</Link>
@@ -30,11 +33,14 @@ function App() {
         </nav>
 
         <Switch>
-          <Route path="/about">
-            {/* <About /> */}
+          <Route path="/creategroup">
+            <CreateGroup />
           </Route>
           <Route path="/users">
             {/* <Users /> */}
+          </Route>
+          <Route path="/groups?id">
+            <GroupExpenses />
           </Route>
           <Route path="/">
             <MyGroups />

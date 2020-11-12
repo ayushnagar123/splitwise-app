@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-
-class Group extends Component{    
+import qs from 'query-string'
+class Expense extends Component{    
     constructor(props){
         super(props);
         this.state={
@@ -34,7 +34,7 @@ class Group extends Component{
                 <h3>{this.state.title}</h3>
                 <p>{this.state.list_of_people}</p>
                 <p>{this.state.expenses}</p>
-                <a href={`/groups?id=${this.state.id}`}>view group expenses</a>
+                <a href={`/groups?=id${this.state.id}`}>view group expenses</a>
                 <input type="text" onChange={this.onNewPeopleAdd}/>
                 <button onClick = {this.onSubmitForm}>Add People</button>
             </div>
@@ -42,42 +42,43 @@ class Group extends Component{
     }
 }
 
-class GroupList extends Component{
+class ExpenseList extends Component{
     constructor(props){
         super(props);
         console.log("props:-",props)
         this.state = {
-            phoneNo : props.data,
-            mygroups:[],
-            // show:false
+            // phoneNo : props.id,
+            expenses:[],
+            id:props.id
         }
     }
     getGroup(){
-        axios.get('http://localhost:5000/users/mygroups',{params:{phoneNo:this.props.data}})
+        axios.get(`http://localhost:5000/groups/${this.state.id}`)
             .then(resp=>{
                 console.log(resp.data)
-                this.setState({mygroups:resp.data});
+                this.setState({expenses:resp.data});
                 console.log(this.state)
             })
             .catch(err=>console.log(err))
     }
     componentDidMount(){
-        console.log("state = ",this.state)
+        // this.state.id = this.props.match.params.groupId;
+        console.log(this.state.id)
         this.getGroup()
     }
     render(){
-        console.log(this.state.mygroups)
-        this.state.mygroups.forEach(group=>{
-            console.log(group)
-        })
+        // console.log(this.state.mygroups)
+        // this.state.mygroups.forEach(group=>{
+        //     console.log(group)
+        // })
         return (
                 <div class="groups">
                     <h1>Groups</h1>
-                    {
+                    {/* {
                         this.state.mygroups.map((group)=>{
                             return (<Group key={group._id} data={group}/>)
                         })
-                    }
+                    } */}
                 </div>
         )
     }
@@ -88,15 +89,25 @@ export default class MyGroups extends Component {
     constructor(props){
         super(props);
         this.state = {
-            phoneNo:"",
-            mygroups:[],
-            show:false
+            id:""
+            // phoneNo:"",
+            // mygroups:[],
+            // show:false
         }
         this.phoneNoChange = this.phoneNoChange.bind(this);
         // this.getGroup = this.getGroup.bind(this);
         this.show = this.show.bind(this);
     }
     
+    componentDidMount(){
+        const obj = qs.parse(this.props.location.search);
+        console.log(obj.param);
+        // this.state.id = params.id;
+        
+        // console.log(this.props.match.params.groupId)
+        // this.getGroup()
+    }
+
     phoneNoChange(e){
         console.log(e.target.value)
         this.setState({phoneNo : e.target.value})
@@ -109,14 +120,15 @@ export default class MyGroups extends Component {
     render() {
         return (
                 <div>
-                    <h1>My Groups</h1>
-                    <input type="text" onChange={this.phoneNoChange}/>
-                    <button onClick={this.show}>Search</button>
-                    <div class="groups">{
+                    <h1>Group Expenses</h1>
+                    {/* <input type="text" onChange={this.phoneNoChange}/> */}
+                    {/* <button onClick={this.show}>Search</button> */}
+                    <ExpenseList id={this.state.id}/>
+                    {/* <div class="groups">{
                         this.state.show &&
-                            <GroupList data = {this.state.phoneNo}/>
+                            <ExpenseList data = {this.state.phoneNo}/>
                         }
-                    </div>
+                    </div> */}
                 </div>
         )
     }
