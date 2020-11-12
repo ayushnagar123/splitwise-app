@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+
 import qs from 'query-string'
 class Expense extends Component{    
     constructor(props){
@@ -53,7 +54,7 @@ class ExpenseList extends Component{
         }
     }
     getGroup(){
-        axios.get(`http://localhost:5000/groups/${this.state.id}`)
+        axios.get(`http://localhost:5000/expenses/${this.state.id}`)
             .then(resp=>{
                 console.log(resp.data)
                 this.setState({expenses:resp.data});
@@ -63,7 +64,10 @@ class ExpenseList extends Component{
     }
     componentDidMount(){
         // this.state.id = this.props.match.params.groupId;
-        console.log(this.state.id)
+        const search = window.location.search;
+        const params = new URLSearchParams(search);
+        this.setState({id:params.get('id')})
+        console.log(this.state)
         this.getGroup()
     }
     render(){
@@ -100,8 +104,8 @@ export default class MyGroups extends Component {
     }
     
     componentDidMount(){
-        const obj = qs.parse(this.props.location.search);
-        console.log(obj.param);
+        const obj = qs.parse(this.props);
+        console.log(obj);
         // this.state.id = params.id;
         
         // console.log(this.props.match.params.groupId)

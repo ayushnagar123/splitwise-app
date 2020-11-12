@@ -39,7 +39,7 @@ function App() {
           <Route path="/users">
             {/* <Users /> */}
           </Route>
-          <Route path="/groups?id">
+          <Route path="/groups">
             <GroupExpenses />
           </Route>
           <Route path="/">

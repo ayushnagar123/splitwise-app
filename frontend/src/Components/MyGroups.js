@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-
+import Expense from './CreateExpense'
 class Group extends Component{    
     constructor(props){
         super(props);
@@ -37,6 +37,7 @@ class Group extends Component{
                 <a href={`/groups?id=${this.state.id}`}>view group expenses</a>
                 <input type="text" onChange={this.onNewPeopleAdd}/>
                 <button onClick = {this.onSubmitForm}>Add People</button>
+                <Expense id = {this.state.id}/>
             </div>
         )
     }
@@ -51,12 +52,13 @@ class GroupList extends Component{
             mygroups:[],
             // show:false
         }
+        this.getGroup = this.getGroup.bind(this);
     }
     getGroup(){
         axios.get('http://localhost:5000/users/mygroups',{params:{phoneNo:this.props.data}})
             .then(resp=>{
                 console.log(resp.data)
-                this.setState({mygroups:resp.data});
+                this.state.mygroups=resp.data;
                 console.log(this.state)
             })
             .catch(err=>console.log(err))
@@ -95,11 +97,13 @@ export default class MyGroups extends Component {
         this.phoneNoChange = this.phoneNoChange.bind(this);
         // this.getGroup = this.getGroup.bind(this);
         this.show = this.show.bind(this);
+        this.phoneNoChange= this.phoneNoChange.bind(this)
     }
     
     phoneNoChange(e){
         console.log(e.target.value)
         this.setState({phoneNo : e.target.value})
+        console.log(this.state)
     }
 
     show(){
@@ -115,6 +119,7 @@ export default class MyGroups extends Component {
                     <div class="groups">{
                         this.state.show &&
                             <GroupList data = {this.state.phoneNo}/>
+
                         }
                     </div>
                 </div>
