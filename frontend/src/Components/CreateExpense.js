@@ -42,7 +42,7 @@ export default class CreateExpense extends Component {
     }
     addExpense(e){
         // console.log(this.props)
-        axios.patch(`http://localhost:5000/expenses/${this.state.id}`,{
+        axios.patch(`http://localhost:3001/expenses/${this.state.id}`,{
             list_of_people:this.state.list_of_people,
             expense_title:this.state.expense_title,
             amount:this.state.amount,

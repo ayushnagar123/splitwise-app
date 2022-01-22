@@ -21,7 +21,7 @@ class Group extends Component{
         console.log(this.state)
     }
     onSubmitForm(){
-        axios.patch(`http://localhost:5000/groups/addpeople/${this.state.id}`,{new_people:[this.state.new_people]})
+        axios.patch(`http://localhost:3001/groups/addpeople/${this.state.id}`,{new_people:[this.state.new_people]})
             .then(resp=>{
                 console.log(resp.data)
             })
@@ -55,7 +55,7 @@ class GroupList extends Component{
         this.getGroup = this.getGroup.bind(this);
     }
     getGroup(){
-        axios.get('http://localhost:5000/users/mygroups',{params:{phoneNo:this.props.data}})
+        axios.get('http://localhost:3001/users/mygroups',{params:{phoneNo:this.props.data}})
             .then(resp=>{
                 console.log(resp.data)
                 this.state.mygroups=resp.data;

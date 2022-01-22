@@ -22,7 +22,7 @@ class Expense extends Component{
         console.log(this.state)
     }
     onSubmitForm(){
-        axios.patch(`http://localhost:5000/groups/addpeople/${this.state.id}`,{new_people:[this.state.new_people]})
+        axios.patch(`http://localhost:3001/groups/addpeople/${this.state.id}`,{new_people:[this.state.new_people]})
             .then(resp=>{
                 console.log(resp.data)
             })
@@ -54,7 +54,7 @@ class ExpenseList extends Component{
         }
     }
     getGroup(){
-        axios.get(`http://localhost:5000/expenses/${this.state.id}`)
+        axios.get(`http://localhost:3001/expenses/${this.state.id}`)
             .then(resp=>{
                 console.log(resp.data)
                 this.setState({expenses:resp.data});

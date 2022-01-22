@@ -40,7 +40,7 @@ export default class MyGroups extends Component {
         this.setState({phoneNo : e.target.value})
     }
     getGroup(){
-        axios.get('http://localhost:5000/users/mygroups',{params:{phoneNo:this.state.phoneNo}})
+        axios.get('http://localhost:3001/users/mygroups',{params:{phoneNo:this.state.phoneNo}})
             .then(resp=>{
                 console.log(resp.data)
                 this.setState({mygroups:resp.data,show : true});
@@ -50,7 +50,7 @@ export default class MyGroups extends Component {
             .catch(err=>console.log(err))
     }
     componentWillMount(){
-        // axios.get('http://localhost:3000/group')
+        // axios.get('http://localhost:3001/group')
     }
     render() {
         // if(this.state.show){
